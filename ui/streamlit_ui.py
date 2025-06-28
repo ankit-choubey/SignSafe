@@ -6,14 +6,18 @@ def launch_ui():
     st.markdown("**Understand any legal document – even if you can't read legal language.**")
 
     st.header("📂 Upload a Document")
-    uploaded_file = st.file_uploader("Choose a PDF or image", type=["pdf", "png", "jpg", "jpeg", "docx"])
+    uploaded_file = st.file_uploader(
+        "Choose a PDF or image",
+        type=["pdf", "png", "jpg", "jpeg", "docx"],
+        help="Limit 200MB per file"
+    )
 
     if uploaded_file:
         st.success("✅ File uploaded successfully!")
         st.subheader("🧠 Here's what we found:")
         st.markdown("---")
 
-        # Sample clause data – to be replaced with backend output
+        # ✅ Replace this later with actual backend output
         sample_clauses = [
             {
                 "original": "The lessee shall indemnify the lessor for any damages...",
@@ -32,20 +36,26 @@ def launch_ui():
             }
         ]
 
-        for i, clause in enumerate(sample_clauses, start=1):
-            st.markdown(f"### 📜 Clause {i}")
-            st.markdown(f"**Original:** {clause['original']}")
-            st.markdown(f"**In Simple Words:** {clause['simple']}")
+        # 🛡️ Safe clause rendering loop
+        try:
+            for i, clause in enumerate(sample_clauses, start=1):
+                st.markdown(f"### 📜 Clause {i}")
+                st.markdown(f"**Original:** {clause['original']}")
+                st.markdown(f"**In Simple Words:** {clause['simple']}")
 
-            if clause["risk"] == "high":
-                st.error("🔴 High Risk")
-            elif clause["risk"] == "medium":
-                st.warning("🟡 Medium Risk")
-            else:
-                st.success("🟢 Low Risk")
+                risk = clause.get("risk", "low")
+                if risk == "high":
+                    st.error("🔴 High Risk")
+                elif risk == "medium":
+                    st.warning("🟡 Medium Risk")
+                else:
+                    st.success("🟢 Low Risk")
 
-            st.markdown("---")
+                st.markdown("---")
+        except Exception as e:
+            st.error("⚠️ There was a problem displaying the clauses.")
+            st.exception(e)
 
-    # Footer
+    # 🔒 Footer
     st.markdown("---")
     st.caption("🔒 SignSafe is built for Microsoft Code Cubicle 4.0 • Team SignSafe")
