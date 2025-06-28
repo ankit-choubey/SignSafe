@@ -58,7 +58,7 @@ def launch_ui():
     """, unsafe_allow_html=True)
 
     # 🎉 HEADER
-    st.markdown("<h1 class='main-title'>📜 SignSafe</h1>", unsafe_allow_html=True)
+    st.markdown("<h1 class='main-title'>📜 SignSafer</h1>", unsafe_allow_html=True)
     st.markdown("<p class='subtitle'>Legal documents, explained simply and clearly</p>", unsafe_allow_html=True)
 
     # 📂 UPLOAD SECTION
