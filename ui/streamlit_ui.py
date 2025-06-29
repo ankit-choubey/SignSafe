@@ -3,149 +3,133 @@ import streamlit as st
 def launch_ui():
     st.set_page_config(page_title="SignSafe", layout="wide")
 
-    # ✅ Custom Fonts + Advanced Styling
+    # Global Styles
     st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
     html, body, [class*="css"] {
         font-family: 'Poppins', sans-serif;
-        background: linear-gradient(145deg, #e0eafc, #cfdef3);
+        background: linear-gradient(to bottom right, #e0eafc, #fdfbfb);
         color: #2c3e50;
     }
 
     .hero {
-        background: radial-gradient(circle at top left, #667eea, #764ba2);
+        background: linear-gradient(to right, #667eea, #764ba2);
         color: white;
-        padding: 5rem 2rem;
-        border-radius: 24px;
+        padding: 4rem 2rem 3rem 2rem;
         text-align: center;
-        box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+        border-radius: 0 0 40px 40px;
+        margin-bottom: 3rem;
     }
 
     .hero h1 {
         font-size: 3.5rem;
-        margin-bottom: 0.2em;
+        margin-bottom: 0.5em;
     }
 
     .hero p {
-        font-size: 1.25rem;
+        font-size: 1.2rem;
         font-weight: 300;
         opacity: 0.9;
     }
 
-    .upload-card {
-        background: white;
-        padding: 2rem;
-        border-radius: 20px;
-        box-shadow: 0 12px 30px rgba(0,0,0,0.08);
-        margin-top: -50px;
-        margin-bottom: 40px;
-    }
-
-    .clause-block {
-        background: rgba(255, 255, 255, 0.75);
-        backdrop-filter: blur(8px);
-        border-radius: 18px;
-        padding: 24px;
-        margin-bottom: 20px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-    }
-
-    .clause-title {
-        font-size: 22px;
+    .section-header {
+        font-size: 1.6rem;
         font-weight: 600;
-        margin-bottom: 10px;
+        margin-top: 3rem;
+        margin-bottom: 1rem;
         color: #34495e;
     }
 
-    .risk-tag {
-        padding: 6px 14px;
-        border-radius: 50px;
-        font-size: 12px;
-        font-weight: 600;
-        display: inline-block;
+    .clause {
+        padding: 1rem 1.5rem;
+        margin: 1.5rem 0;
+        border-left: 6px solid #667eea;
+        background: rgba(255,255,255,0.5);
+        border-radius: 12px;
     }
 
     .risk-high {
-        background-color: #ffdddd;
-        color: #c0392b;
+        color: #e74c3c;
+        font-weight: bold;
     }
 
     .risk-medium {
-        background-color: #fff3cd;
-        color: #b36b00;
+        color: #f39c12;
+        font-weight: bold;
     }
 
     .risk-low {
-        background-color: #d4edda;
-        color: #155724;
+        color: #27ae60;
+        font-weight: bold;
     }
 
     .footer {
         text-align: center;
         font-size: 13px;
         margin-top: 50px;
-        color: #666;
+        color: #7f8c8d;
     }
     </style>
     """, unsafe_allow_html=True)
 
-    # 🌈 Hero Section
+    # 🌈 Hero
     st.markdown("""
     <div class="hero">
         <h1>📜 SignSafe</h1>
-        <p>Your Legal Documents, Explained Clearly — With a Voice</p>
+        <p>Understand legal documents, even if you can’t read legal jargon</p>
     </div>
     """, unsafe_allow_html=True)
 
-    # ⬆ Upload Panel
-    st.markdown("<div class='upload-card'>", unsafe_allow_html=True)
-    st.subheader("📂 Upload a Contract or Document")
-    uploaded_file = st.file_uploader("Supported formats: PDF, DOCX, JPG, PNG", type=["pdf", "docx", "jpg", "jpeg", "png"])
-    st.markdown("</div>", unsafe_allow_html=True)
+    # ⬆ Upload Panel (Inline, no box)
+    st.markdown("<div class='section-header'>📂 Upload Your Document</div>", unsafe_allow_html=True)
+    uploaded_file = st.file_uploader("Upload PDF, DOCX, or Image", type=["pdf", "docx", "jpg", "jpeg", "png"])
 
     if uploaded_file:
         st.success("✅ File uploaded! Here's what we found:")
-        clauses = [
+
+        sample_clauses = [
             {
                 "original": "The lessee shall indemnify the lessor for any damages...",
-                "simple": "If anything breaks while you're there, you have to pay.",
+                "simple": "If something breaks while you're staying there, you must pay for it.",
                 "risk": "high"
             },
             {
-                "original": "Auto-renewal clause activates every 12 months unless stopped...",
-                "simple": "This keeps going unless you cancel it yourself.",
+                "original": "This contract will renew automatically unless cancelled...",
+                "simple": "It keeps renewing unless you stop it manually.",
                 "risk": "medium"
             },
             {
-                "original": "Jurisdiction is under the court of Maharashtra...",
-                "simple": "Any problems will go to court in Maharashtra.",
+                "original": "Any disputes must be resolved in Delhi courts only.",
+                "simple": "If something goes wrong, Delhi court will handle the issue.",
                 "risk": "low"
             }
         ]
 
-        # 📄 Clause Panels
-        for i, clause in enumerate(clauses, 1):
-            st.markdown("<div class='clause-block'>", unsafe_allow_html=True)
-            st.markdown(f"<div class='clause-title'>📜 Clause {i}</div>", unsafe_allow_html=True)
-            st.markdown(f"**Original Text:** {clause['original']}")
-            st.markdown(f"**Simple Explanation:** {clause['simple']}")
+        st.markdown("<div class='section-header'>🧠 Clause-by-Clause Explanation</div>", unsafe_allow_html=True)
 
+        for i, clause in enumerate(sample_clauses, 1):
             risk_class = {
                 "high": "risk-high",
                 "medium": "risk-medium",
                 "low": "risk-low"
-            }.get(clause["risk"], "risk-low")
+            }[clause["risk"]]
 
-            label = {
+            risk_label = {
                 "high": "🔴 High Risk",
                 "medium": "🟡 Medium Risk",
                 "low": "🟢 Low Risk"
-            }.get(clause["risk"])
+            }[clause["risk"]]
 
-            st.markdown(f"<div class='risk-tag {risk_class}'>{label}</div>", unsafe_allow_html=True)
-            st.markdown("</div>", unsafe_allow_html=True)
+            st.markdown(f"""
+            <div class="clause">
+                <h4>📜 Clause {i}</h4>
+                <p><strong>Original:</strong> {clause['original']}</p>
+                <p><strong>Simple:</strong> {clause['simple']}</p>
+                <p class="{risk_class}">{risk_label}</p>
+            </div>
+            """, unsafe_allow_html=True)
 
     # Footer
-    st.markdown("<div class='footer'>Made by Team SignSafe • Microsoft Code Cubicle 4.0</div>", unsafe_allow_html=True)
+    st.markdown("<div class='footer'>🔒 Team SignSafe • Built for Microsoft Code Cubicle 4.0</div>", unsafe_allow_html=True)
