@@ -26,15 +26,10 @@ def launch_ui():
             border-radius: 0 0 20px 20px;
             text-align: center;
         }
-        .upload-area {
-            background-color: #2a2a2a;
-            padding: 2rem;
-            border-radius: 16px;
-            margin-bottom: 2rem;
-        }
         .clause {
             background-color: #2a2a2a;
             border-left: 5px solid #5dade2;
+            color: #f0f0f0;
             padding: 1.5rem;
             margin-bottom: 1.5rem;
             border-radius: 12px;
@@ -74,16 +69,10 @@ def launch_ui():
             border-radius: 0 0 20px 20px;
             text-align: center;
         }
-        .upload-area {
-            background-color: #ffffff;
-            padding: 2rem;
-            border-radius: 16px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.06);
-            margin-bottom: 2rem;
-        }
         .clause {
             background-color: #ffffff;
             border-left: 5px solid #5dade2;
+            color: #222222 !important;
             padding: 1.5rem;
             margin-bottom: 1.5rem;
             border-radius: 12px;
@@ -117,11 +106,9 @@ def launch_ui():
     </div>
     """, unsafe_allow_html=True)
 
-    # 📤 Upload Section
+    # 📤 Upload Section (cleaned, no box)
     st.markdown("### 📂 Upload Document")
-    st.markdown("<div class='upload-area'>", unsafe_allow_html=True)
     uploaded_file = st.file_uploader("Choose a PDF, Word, or image file", type=["pdf", "docx", "jpg", "jpeg", "png"])
-    st.markdown("</div>", unsafe_allow_html=True)
 
     # 🧠 Sample Output
     if uploaded_file:
