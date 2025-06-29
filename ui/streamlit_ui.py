@@ -77,7 +77,7 @@ def launch_ui():
     # 🌈 Hero
     st.markdown("""
     <div class="hero">
-        <h1>📜 SignSafe</h1>
+        <h1>📜 SignSafer</h1>
         <p>Understand legal documents, even if you can’t read legal jargon</p>
     </div>
     """, unsafe_allow_html=True)
