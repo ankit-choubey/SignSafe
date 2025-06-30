@@ -98,112 +98,131 @@ class SignSafeApp:
         # Add global widget script
         import streamlit.components.v1 as components
         
-        # Load widget script globally with enhanced positioning
+        # Load widget using iframe-breaking approach
         components.html("""
-        <style>
-        /* Remove any Streamlit container constraints */
-        .stApp {
-            overflow: visible !important;
-        }
-        
-        /* Ensure all widget elements are free-floating */
-        [id*="omnidimension"],
-        [class*="omnidimension"],
-        iframe[src*="omnidim"],
-        div[id*="omnidimension"],
-        div[class*="omnidimension"] {
-            position: fixed !important;
-            z-index: 2147483647 !important;
-            top: auto !important;
-            bottom: 20px !important;
-            right: 20px !important;
-            left: auto !important;
-            width: auto !important;
-            height: auto !important;
-            max-width: none !important;
-            max-height: none !important;
-            margin: 0 !important;
-            padding: 0 !important;
-            border: none !important;
-            transform: none !important;
-            clip: none !important;
-            overflow: visible !important;
-        }
-        
-        /* Override Streamlit iframe constraints */
-        .stApp iframe {
-            overflow: visible !important;
-        }
-        
-        /* Reduce Streamlit container priority */
-        .main,
-        .stApp > header,
-        .stApp > .main,
-        .stApp > .sidebar,
-        [data-testid="stAppViewContainer"] {
-            z-index: 1 !important;
-            position: relative !important;
-        }
-        </style>
         <script>
-        // Load widget with enhanced positioning
+        // Break out of iframe constraints and load widget in parent window
         (function() {
-            var script = document.createElement('script');
-            script.id = 'omnidimension-web-widget';
-            script.src = 'https://backend.omnidim.io/web_widget.js?secret_key=b45069849cfaedd6106c15a0314c973b';
-            script.async = true;
-            
-            // Append to document head to avoid Streamlit container constraints
-            document.head.appendChild(script);
-            
-            // Monitor and fix widget positioning
-            function fixWidgetPosition() {
-                var widgets = document.querySelectorAll('[id*="omnidimension"], [class*="omnidimension"], iframe[src*="omnidim"]');
-                widgets.forEach(function(widget) {
-                    widget.style.position = 'fixed';
-                    widget.style.zIndex = '2147483647';
-                    widget.style.bottom = '20px';
-                    widget.style.right = '20px';
-                    widget.style.top = 'auto';
-                    widget.style.left = 'auto';
-                    widget.style.width = 'auto';
-                    widget.style.height = 'auto';
-                    widget.style.maxWidth = 'none';
-                    widget.style.maxHeight = 'none';
-                    widget.style.overflow = 'visible';
-                    widget.style.transform = 'none';
-                    widget.style.clip = 'auto';
+            try {
+                // Try to access parent window (breaks iframe constraints)
+                var targetWindow = window.parent || window.top || window;
+                
+                // Remove any existing widgets
+                var existingWidgets = targetWindow.document.querySelectorAll('[id*="omnidimension"]');
+                existingWidgets.forEach(function(widget) {
+                    widget.remove();
+                });
+                
+                // Create widget script in parent window
+                var script = targetWindow.document.createElement('script');
+                script.id = 'omnidimension-web-widget';
+                script.src = 'https://backend.omnidim.io/web_widget.js?secret_key=b45069849cfaedd6106c15a0314c973b';
+                script.async = true;
+                
+                // Add comprehensive CSS to parent window
+                var style = targetWindow.document.createElement('style');
+                style.innerHTML = `
+                    /* Force widget to be completely free-floating */
+                    [id*="omnidimension"],
+                    [class*="omnidimension"],
+                    iframe[src*="omnidim"],
+                    div[id*="omnidimension"],
+                    div[class*="omnidimension"] {
+                        position: fixed !important;
+                        z-index: 2147483647 !important;
+                        bottom: 20px !important;
+                        right: 20px !important;
+                        top: auto !important;
+                        left: auto !important;
+                        width: auto !important;
+                        height: auto !important;
+                        max-width: 100vw !important;
+                        max-height: 100vh !important;
+                        margin: 0 !important;
+                        padding: 0 !important;
+                        border: none !important;
+                        transform: none !important;
+                        clip: none !important;
+                        overflow: visible !important;
+                        visibility: visible !important;
+                        display: block !important;
+                    }
                     
-                    // Ensure parent containers don't constrain
-                    var parent = widget.parentElement;
-                    while (parent) {
-                        if (parent.style) {
+                    /* Ensure body allows overflow */
+                    body {
+                        overflow: visible !important;
+                    }
+                    
+                    /* Override any container constraints */
+                    iframe {
+                        overflow: visible !important;
+                    }
+                `;
+                
+                targetWindow.document.head.appendChild(style);
+                targetWindow.document.head.appendChild(script);
+                
+                // Enhanced positioning monitor for parent window
+                function enhancedPositionFix() {
+                    var widgets = targetWindow.document.querySelectorAll('[id*="omnidimension"], [class*="omnidimension"], iframe[src*="omnidim"]');
+                    widgets.forEach(function(widget) {
+                        // Force absolute positioning
+                        widget.style.cssText = `
+                            position: fixed !important;
+                            z-index: 2147483647 !important;
+                            bottom: 20px !important;
+                            right: 20px !important;
+                            top: auto !important;
+                            left: auto !important;
+                            width: auto !important;
+                            height: auto !important;
+                            max-width: 400px !important;
+                            max-height: 600px !important;
+                            overflow: visible !important;
+                            visibility: visible !important;
+                            display: block !important;
+                            transform: none !important;
+                            clip: auto !important;
+                            margin: 0 !important;
+                            padding: 0 !important;
+                            border: none !important;
+                        `;
+                        
+                        // Remove any constraining parent styles
+                        var parent = widget.parentElement;
+                        while (parent && parent !== targetWindow.document.body) {
                             parent.style.overflow = 'visible';
+                            parent.style.position = 'static';
                             parent.style.zIndex = '1';
+                            parent = parent.parentElement;
                         }
-                        parent = parent.parentElement;
-                    }
+                    });
+                }
+                
+                // Apply positioning fixes with multiple timers
+                setTimeout(enhancedPositionFix, 500);
+                setTimeout(enhancedPositionFix, 1500);
+                setTimeout(enhancedPositionFix, 3000);
+                setTimeout(enhancedPositionFix, 5000);
+                
+                // Continuous monitoring
+                var monitor = new MutationObserver(enhancedPositionFix);
+                monitor.observe(targetWindow.document.body, {
+                    childList: true,
+                    subtree: true,
+                    attributes: true,
+                    attributeFilter: ['style', 'class', 'id']
                 });
+                
+            } catch (e) {
+                // Fallback: load in current context with maximum constraints override
+                console.log('Loading widget in current context:', e);
+                var script = document.createElement('script');
+                script.id = 'omnidimension-web-widget-fallback';
+                script.src = 'https://backend.omnidim.io/web_widget.js?secret_key=b45069849cfaedd6106c15a0314c973b';
+                script.async = true;
+                document.head.appendChild(script);
             }
-            
-            // Apply fixes multiple times
-            setTimeout(fixWidgetPosition, 1000);
-            setTimeout(fixWidgetPosition, 3000);
-            setTimeout(fixWidgetPosition, 5000);
-            
-            // Monitor for new widgets
-            var observer = new MutationObserver(function(mutations) {
-                mutations.forEach(function(mutation) {
-                    if (mutation.addedNodes) {
-                        fixWidgetPosition();
-                    }
-                });
-            });
-            
-            observer.observe(document.body, {
-                childList: true,
-                subtree: true
-            });
         })();
         </script>
         """, height=0)
