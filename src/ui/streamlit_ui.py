@@ -1438,13 +1438,57 @@ Date: _______________          Date: _______________
             st.markdown("<br><br>", unsafe_allow_html=True)
             st.subheader("📊 Risk Distribution")
             
-            risk_data = {
-                'High Risk': risk_summary.get('high_risk_count', 0),
-                'Medium Risk': risk_summary.get('medium_risk_count', 0),
-                'Low Risk': risk_summary.get('low_risk_count', 0)
-            }
+            high_count = risk_summary.get('high_risk_count', 0)
+            medium_count = risk_summary.get('medium_risk_count', 0)
+            low_count = risk_summary.get('low_risk_count', 0)
+            total = high_count + medium_count + low_count
             
-            st.bar_chart(risk_data)
+            if total > 0:
+                # Create three columns for the risk distribution
+                col1, col2, col3 = st.columns(3)
+                
+                with col1:
+                    high_percent = round((high_count / total) * 100, 1)
+                    st.markdown(f"""
+                    <div style="text-align: center; padding: 20px; background: linear-gradient(135deg, #dc3545, #c82333); border-radius: 15px; margin: 10px 0;">
+                        <div style="color: white; font-size: 2.5rem; font-weight: bold;">{high_count}</div>
+                        <div style="color: #fff; font-size: 1.1rem; margin: 5px 0;">High Risk</div>
+                        <div style="color: #ffcccb; font-size: 0.9rem;">{high_percent}% of clauses</div>
+                    </div>
+                    """, unsafe_allow_html=True)
+                
+                with col2:
+                    medium_percent = round((medium_count / total) * 100, 1)
+                    st.markdown(f"""
+                    <div style="text-align: center; padding: 20px; background: linear-gradient(135deg, #fd7e14, #e66a00); border-radius: 15px; margin: 10px 0;">
+                        <div style="color: white; font-size: 2.5rem; font-weight: bold;">{medium_count}</div>
+                        <div style="color: #fff; font-size: 1.1rem; margin: 5px 0;">Medium Risk</div>
+                        <div style="color: #ffd6b3; font-size: 0.9rem;">{medium_percent}% of clauses</div>
+                    </div>
+                    """, unsafe_allow_html=True)
+                
+                with col3:
+                    low_percent = round((low_count / total) * 100, 1)
+                    st.markdown(f"""
+                    <div style="text-align: center; padding: 20px; background: linear-gradient(135deg, #28a745, #218838); border-radius: 15px; margin: 10px 0;">
+                        <div style="color: white; font-size: 2.5rem; font-weight: bold;">{low_count}</div>
+                        <div style="color: #fff; font-size: 1.1rem; margin: 5px 0;">Low Risk</div>
+                        <div style="color: #c3e6cb; font-size: 0.9rem;">{low_percent}% of clauses</div>
+                    </div>
+                    """, unsafe_allow_html=True)
+                
+                # Add a visual progress bar below
+                st.markdown("<br>", unsafe_allow_html=True)
+                progress_html = f"""
+                <div style="background-color: #2c3e50; border-radius: 10px; overflow: hidden; height: 20px; margin: 20px 0;">
+                    <div style="display: flex; height: 100%;">
+                        <div style="background: #dc3545; width: {high_percent}%; transition: all 0.3s ease;"></div>
+                        <div style="background: #fd7e14; width: {medium_percent}%; transition: all 0.3s ease;"></div>
+                        <div style="background: #28a745; width: {low_percent}%; transition: all 0.3s ease;"></div>
+                    </div>
+                </div>
+                """
+                st.markdown(progress_html, unsafe_allow_html=True)
         
         # Overall recommendation (moved below risk distribution chart)
         recommendation = risk_summary.get('recommendation', '')
