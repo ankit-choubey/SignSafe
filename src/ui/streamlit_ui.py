@@ -95,137 +95,9 @@ class SignSafeApp:
         # Inject custom CSS for professional styling
         inject_custom_css()
         
-        # Add global widget script
-        import streamlit.components.v1 as components
+
         
-        # Load widget using iframe-breaking approach
-        components.html("""
-        <script>
-        // Break out of iframe constraints and load widget in parent window
-        (function() {
-            try {
-                // Try to access parent window (breaks iframe constraints)
-                var targetWindow = window.parent || window.top || window;
-                
-                // Remove any existing widgets
-                var existingWidgets = targetWindow.document.querySelectorAll('[id*="omnidimension"]');
-                existingWidgets.forEach(function(widget) {
-                    widget.remove();
-                });
-                
-                // Create widget script in parent window
-                var script = targetWindow.document.createElement('script');
-                script.id = 'omnidimension-web-widget';
-                script.src = 'https://backend.omnidim.io/web_widget.js?secret_key=b45069849cfaedd6106c15a0314c973b';
-                script.async = true;
-                
-                // Add comprehensive CSS to parent window
-                var style = targetWindow.document.createElement('style');
-                style.innerHTML = `
-                    /* Force widget to be completely free-floating */
-                    [id*="omnidimension"],
-                    [class*="omnidimension"],
-                    iframe[src*="omnidim"],
-                    div[id*="omnidimension"],
-                    div[class*="omnidimension"] {
-                        position: fixed !important;
-                        z-index: 2147483647 !important;
-                        bottom: 20px !important;
-                        right: 20px !important;
-                        top: auto !important;
-                        left: auto !important;
-                        width: auto !important;
-                        height: auto !important;
-                        max-width: 100vw !important;
-                        max-height: 100vh !important;
-                        margin: 0 !important;
-                        padding: 0 !important;
-                        border: none !important;
-                        transform: none !important;
-                        clip: none !important;
-                        overflow: visible !important;
-                        visibility: visible !important;
-                        display: block !important;
-                    }
-                    
-                    /* Ensure body allows overflow */
-                    body {
-                        overflow: visible !important;
-                    }
-                    
-                    /* Override any container constraints */
-                    iframe {
-                        overflow: visible !important;
-                    }
-                `;
-                
-                targetWindow.document.head.appendChild(style);
-                targetWindow.document.head.appendChild(script);
-                
-                // Enhanced positioning monitor for parent window
-                function enhancedPositionFix() {
-                    var widgets = targetWindow.document.querySelectorAll('[id*="omnidimension"], [class*="omnidimension"], iframe[src*="omnidim"]');
-                    widgets.forEach(function(widget) {
-                        // Force absolute positioning
-                        widget.style.cssText = `
-                            position: fixed !important;
-                            z-index: 2147483647 !important;
-                            bottom: 20px !important;
-                            right: 20px !important;
-                            top: auto !important;
-                            left: auto !important;
-                            width: auto !important;
-                            height: auto !important;
-                            max-width: 400px !important;
-                            max-height: 600px !important;
-                            overflow: visible !important;
-                            visibility: visible !important;
-                            display: block !important;
-                            transform: none !important;
-                            clip: auto !important;
-                            margin: 0 !important;
-                            padding: 0 !important;
-                            border: none !important;
-                        `;
-                        
-                        // Remove any constraining parent styles
-                        var parent = widget.parentElement;
-                        while (parent && parent !== targetWindow.document.body) {
-                            parent.style.overflow = 'visible';
-                            parent.style.position = 'static';
-                            parent.style.zIndex = '1';
-                            parent = parent.parentElement;
-                        }
-                    });
-                }
-                
-                // Apply positioning fixes with multiple timers
-                setTimeout(enhancedPositionFix, 500);
-                setTimeout(enhancedPositionFix, 1500);
-                setTimeout(enhancedPositionFix, 3000);
-                setTimeout(enhancedPositionFix, 5000);
-                
-                // Continuous monitoring
-                var monitor = new MutationObserver(enhancedPositionFix);
-                monitor.observe(targetWindow.document.body, {
-                    childList: true,
-                    subtree: true,
-                    attributes: true,
-                    attributeFilter: ['style', 'class', 'id']
-                });
-                
-            } catch (e) {
-                // Fallback: load in current context with maximum constraints override
-                console.log('Loading widget in current context:', e);
-                var script = document.createElement('script');
-                script.id = 'omnidimension-web-widget-fallback';
-                script.src = 'https://backend.omnidim.io/web_widget.js?secret_key=b45069849cfaedd6106c15a0314c973b';
-                script.async = true;
-                document.head.appendChild(script);
-            }
-        })();
-        </script>
-        """, height=0)
+
         
         # Route based on app mode
         if st.session_state.app_mode == "landing":
@@ -1368,24 +1240,7 @@ Date: _______________          Date: _______________
                 self.display_risk_summary(risk_summary)
 
     
-    def render_voice_chat_widget(self):
-        """Render a simple AI voice chat widget."""
-        import streamlit.components.v1 as components
-        
-        # Simple widget with just the script
-        widget_html = """
-        <!DOCTYPE html>
-        <html>
-        <head>
-            <meta charset="utf-8">
-        </head>
-        <body>
-            <script id="omnidimension-web-widget" async src="https://backend.omnidim.io/web_widget.js?secret_key=b45069849cfaedd6106c15a0314c973b"></script>
-        </body>
-        </html>
-        """
-        
-        components.html(widget_html, height=50)
+
     
     def display_risk_summary(self, risk_summary: Dict[str, Any]):
         """Display risk summary dashboard."""

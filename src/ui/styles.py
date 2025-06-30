@@ -490,26 +490,7 @@ def inject_custom_css():
     
 
     
-    /* Widget Positioning Override */
-    [id*="omnidimension"],
-    .omnidimension-widget,
-    .omnidimension-chat-widget {
-        z-index: 999999 !important;
-        position: fixed !important;
-    }
-    
-    /* Ensure widget iframe is properly positioned */
-    iframe[src*="omnidim"] {
-        z-index: 999999 !important;
-        position: fixed !important;
-    }
-    
-    /* Override Streamlit's container z-index */
-    .stApp > header,
-    .stApp > .main,
-    .stApp > .sidebar {
-        z-index: 1 !important;
-    }
+
     
     /* Responsive Design */
     @media (max-width: 768px) {
