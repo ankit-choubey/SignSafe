@@ -1433,12 +1433,6 @@ Date: _______________          Date: _______________
                     risks_html = "<ol>" + "".join([f"<li>{risk}</li>" for risk in top_risks]) + "</ol>"
                     st.markdown(f'<div style="background-color: #3d1a00; padding: 15px; border-radius: 8px; border-left: 4px solid #fd7e14; color: white;">{risks_html}</div>', unsafe_allow_html=True)
         
-        # Overall recommendation
-        recommendation = risk_summary.get('recommendation', '')
-        if recommendation:
-            st.subheader("💡 Recommendation")
-            st.info(recommendation)
-        
         # Risk distribution chart
         if risk_summary.get('total_clauses', 0) > 0:
             st.subheader("📊 Risk Distribution")
@@ -1450,6 +1444,12 @@ Date: _______________          Date: _______________
             }
             
             st.bar_chart(risk_data)
+        
+        # Overall recommendation (moved below risk distribution chart)
+        recommendation = risk_summary.get('recommendation', '')
+        if recommendation:
+            st.subheader("💡 Recommendation")
+            st.info(recommendation)
         
         # Add voice chat widget at the bottom of risk summary
         self.render_voice_chat_widget()
