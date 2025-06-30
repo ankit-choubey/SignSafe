@@ -1149,24 +1149,32 @@ Date: _______________          Date: _______________
                 
 
                 
-                # Risk factors
+                # Risk factors and Warnings side by side
                 risk_factors = clause.get('risk_factors', [])
-                if risk_factors:
-                    st.write("**Risk Factors:**")
-                    for factor in risk_factors:
-                        st.write(f"• {factor}")
-                
-                # Warnings
                 warnings = clause.get('warnings', [])
-                if warnings:
-                    st.write("**Warnings:**")
-                    # Use translated warnings if available, otherwise original
-                    if translation_language and clause.get('warnings_translated'):
-                        for warning in clause['warnings_translated']:
-                            st.warning(warning)
-                    else:
-                        for warning in warnings:
-                            st.warning(warning)
+                
+                if risk_factors or warnings:
+                    st.markdown("<br>", unsafe_allow_html=True)
+                    col3, col4 = st.columns([1, 1])
+                    
+                    with col3:
+                        if risk_factors:
+                            st.write("**Risk Factors:**")
+                            risk_factors_html = "<ul>" + "".join([f"<li>{factor}</li>" for factor in risk_factors]) + "</ul>"
+                            st.markdown(f'<div style="background-color: #3d1a00; padding: 15px; border-radius: 8px; border-left: 4px solid #fd7e14; color: white;">{risk_factors_html}</div>', unsafe_allow_html=True)
+                    
+                    with col4:
+                        if warnings:
+                            st.write("**Warnings:**")
+                            # Use translated warnings if available, otherwise original
+                            warnings_to_display = []
+                            if translation_language and clause.get('warnings_translated'):
+                                warnings_to_display = clause['warnings_translated']
+                            else:
+                                warnings_to_display = warnings
+                            
+                            warnings_html = "<ul>" + "".join([f"<li>{warning}</li>" for warning in warnings_to_display]) + "</ul>"
+                            st.markdown(f'<div style="background-color: #721c24; padding: 15px; border-radius: 8px; border-left: 4px solid #dc3545; color: white;">{warnings_html}</div>', unsafe_allow_html=True)
                 
                 # Recommendations
                 recommendations = clause.get('recommendations', [])
