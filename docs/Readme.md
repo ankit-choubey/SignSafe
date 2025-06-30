@@ -309,15 +309,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 [🌐 **Try SignSafe Pro**](https://signsafepro.onrender.com/) | [⭐ **Star this repo**](https://github.com/yourusername/signsafe) | [🐦 **Follow updates**](https://twitter.com/signsafepro)
 
 *"Democratizing legal document understanding, one contract at a time."*
-
-</div>
-<div style="text-align: center">⁂</div>
-
-[^1]: ARCHITECTURE.md
-
-[^2]: README.md
-
-[^3]: USER_GUIDE.md
-
-[^4]: 1000068032-removebg-preview.jpg
-
