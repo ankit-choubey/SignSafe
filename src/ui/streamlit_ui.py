@@ -1414,19 +1414,24 @@ Date: _______________          Date: _______________
             st.success("🟢 **LOW RISK DOCUMENT**")
             st.write("This document appears to have minimal risks.")
         
-        # Top risk factors
-        top_risks = risk_summary.get('top_risk_factors', [])
-        if top_risks:
-            st.subheader("🎯 Top Risk Factors")
-            for i, risk in enumerate(top_risks, 1):
-                st.write(f"{i}. {risk}")
-        
-        # Critical warnings
+        # Critical warnings and Top risk factors side by side
         warnings = risk_summary.get('critical_warnings', [])
-        if warnings:
-            st.subheader("⚠️ Critical Warnings")
-            for warning in warnings:
-                st.warning(warning)
+        top_risks = risk_summary.get('top_risk_factors', [])
+        
+        if warnings or top_risks:
+            col1, col2 = st.columns([1, 1])
+            
+            with col1:
+                if warnings:
+                    st.subheader("⚠️ Critical Warnings")
+                    warnings_html = "<ul>" + "".join([f"<li>{warning}</li>" for warning in warnings]) + "</ul>"
+                    st.markdown(f'<div style="background-color: #721c24; padding: 15px; border-radius: 8px; border-left: 4px solid #dc3545; color: white;">{warnings_html}</div>', unsafe_allow_html=True)
+            
+            with col2:
+                if top_risks:
+                    st.subheader("🎯 Top Risk Factors")
+                    risks_html = "<ol>" + "".join([f"<li>{risk}</li>" for risk in top_risks]) + "</ol>"
+                    st.markdown(f'<div style="background-color: #3d1a00; padding: 15px; border-radius: 8px; border-left: 4px solid #fd7e14; color: white;">{risks_html}</div>', unsafe_allow_html=True)
         
         # Overall recommendation
         recommendation = risk_summary.get('recommendation', '')
