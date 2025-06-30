@@ -100,7 +100,43 @@ class SignSafeApp:
         
         # Load widget script globally to ensure it works across all pages
         components.html("""
+        <style>
+        /* Ensure widget appears on top of Streamlit elements */
+        iframe[id*="omnidimension"] {
+            z-index: 999999 !important;
+            position: fixed !important;
+        }
+        
+        /* Override any Streamlit z-index conflicts */
+        .omnidimension-widget,
+        .omnidimension-widget * {
+            z-index: 999999 !important;
+            position: fixed !important;
+        }
+        
+        /* Ensure widget container is properly positioned */
+        [id*="omnidimension"] {
+            z-index: 999999 !important;
+        }
+        
+        /* Additional widget positioning fixes */
+        div[id*="omnidimension"],
+        div[class*="omnidimension"] {
+            z-index: 999999 !important;
+            position: fixed !important;
+        }
+        </style>
         <script id="omnidimension-web-widget" async src="https://backend.omnidim.io/web_widget.js?secret_key=b45069849cfaedd6106c15a0314c973b"></script>
+        <script>
+        // Additional JavaScript to ensure widget positioning
+        setTimeout(function() {
+            var widgets = document.querySelectorAll('[id*="omnidimension"], [class*="omnidimension"]');
+            widgets.forEach(function(widget) {
+                widget.style.zIndex = '999999';
+                widget.style.position = 'fixed';
+            });
+        }, 2000);
+        </script>
         """, height=0)
         
         # Route based on app mode
