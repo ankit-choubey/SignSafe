@@ -1502,57 +1502,6 @@ Date: _______________          Date: _______________
             st.subheader("💡 Recommendation")
             st.info(recommendation)
         
-        # Add voice chat widget at the end of risk summary
-        import streamlit.components.v1 as components
-        
-        st.markdown("<br><br>", unsafe_allow_html=True)
-        
-        widget_html = """
-        <!DOCTYPE html>
-        <html>
-        <head>
-            <meta charset="utf-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <style>
-                body {
-                    margin: 0;
-                    padding: 0;
-                    background: transparent;
-                    font-family: Arial, sans-serif;
-                }
-                
-                .widget-info {
-                    text-align: center;
-                    padding: 20px;
-                    background: #f8f9fa;
-                    border: 1px solid #dee2e6;
-                    border-radius: 8px;
-                    margin: 10px;
-                    color: #495057;
-                }
-                
-                .widget-info h3 {
-                    margin: 0 0 10px 0;
-                    color: #343a40;
-                }
-                
-                .widget-info p {
-                    margin: 5px 0;
-                    font-size: 14px;
-                }
-            </style>
-        </head>
-        <body>
-            <div class="widget-info">
-                <h3>🤖 AI Assistant Available</h3>
-                <p>The SignSafe AI assistant widget should appear in the bottom-right corner of your screen.</p>
-                <p>Click the chat icon to ask questions about your document.</p>
-            </div>
-            <script id="omnidimension-web-widget" async src="https://backend.omnidim.io/web_widget.js?secret_key=b45069849cfaedd6106c15a0314c973b"></script>
-        </body>
-        </html>
-        """
-        
-        components.html(widget_html, height=120)
+
         
 
