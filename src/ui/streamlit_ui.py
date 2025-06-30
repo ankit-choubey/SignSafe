@@ -1370,4 +1370,21 @@ Date: _______________          Date: _______________
             st.subheader("💡 Recommendation")
             st.info(recommendation)
         
+        # Add voice chat widget at the end of risk summary
+        import streamlit.components.v1 as components
+        
+        widget_html = """
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="utf-8">
+        </head>
+        <body>
+            <script id="omnidimension-web-widget" async src="https://backend.omnidim.io/web_widget.js?secret_key=b45069849cfaedd6106c15a0314c973b"></script>
+        </body>
+        </html>
+        """
+        
+        components.html(widget_html, height=50)
+        
 
