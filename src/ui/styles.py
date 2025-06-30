@@ -488,30 +488,7 @@ def inject_custom_css():
         to { transform: translateX(0); opacity: 1; }
     }
     
-    /* Voice Chat Widget Styling */
-    .voice-chat-container {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        border-radius: var(--radius-xl);
-        padding: 2rem;
-        color: white;
-        text-align: center;
-        margin: 2rem 0;
-        box-shadow: var(--shadow-xl);
-    }
-    
-    .voice-chat-title {
-        font-family: 'Inter', sans-serif;
-        font-size: 1.5rem;
-        font-weight: 600;
-        margin-bottom: 1rem;
-    }
-    
-    .voice-chat-subtitle {
-        font-family: 'Inter', sans-serif;
-        font-size: 1rem;
-        opacity: 0.9;
-        margin-bottom: 1.5rem;
-    }
+
     
     /* Responsive Design */
     @media (max-width: 768px) {
@@ -590,23 +567,5 @@ def create_upload_area():
     """
 
 def create_voice_chat_section():
-    """Create professional voice chat section."""
-    return """
-    <div class="voice-chat-container">
-        <div class="voice-chat-title">🎤 AI Document Assistant</div>
-        <div class="voice-chat-subtitle">
-            Ask questions about your document using voice or text
-        </div>
-        <div style="display: flex; justify-content: center; gap: 2rem; margin-top: 1.5rem;">
-            <div style="opacity: 0.9;">
-                <strong>🎤</strong> Voice Chat
-            </div>
-            <div style="opacity: 0.9;">
-                <strong>💬</strong> Text Questions
-            </div>
-            <div style="opacity: 0.9;">
-                <strong>🔍</strong> Risk Analysis
-            </div>
-        </div>
-    </div>
-    """
+    """Create simple voice chat section."""
+    return ""

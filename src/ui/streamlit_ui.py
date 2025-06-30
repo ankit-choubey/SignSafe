@@ -1237,149 +1237,23 @@ Date: _______________          Date: _______________
 
     
     def render_voice_chat_widget(self):
-        """Render the Omnidimension AI voice chat widget with modern design."""
+        """Render a simple AI voice chat widget."""
         import streamlit.components.v1 as components
         
-        # Professional voice chat section
-        st.markdown(create_voice_chat_section(), unsafe_allow_html=True)
-        
-        # Enhanced widget container with modern styling
+        # Simple widget with just the script
         widget_html = """
         <!DOCTYPE html>
         <html>
         <head>
             <meta charset="utf-8">
-            <title>SignSafe Document Assistant</title>
-            <style>
-                @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
-                
-                body {
-                    margin: 0;
-                    padding: 0;
-                    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-                    font-family: 'Inter', sans-serif;
-                    min-height: 200px;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                }
-                
-                .widget-container {
-                    width: 100%;
-                    max-width: 600px;
-                    background: white;
-                    border-radius: 16px;
-                    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-                    padding: 2rem;
-                    text-align: center;
-                    border: 1px solid #e2e8f0;
-                    position: relative;
-                    overflow: hidden;
-                }
-                
-                .widget-container::before {
-                    content: '';
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    right: 0;
-                    height: 4px;
-                    background: linear-gradient(90deg, #2563eb, #3b82f6, #6366f1);
-                }
-                
-                .assistant-status {
-                    color: #2563eb;
-                    font-size: 1.1rem;
-                    font-weight: 600;
-                    margin-bottom: 0.5rem;
-                }
-                
-                .assistant-subtitle {
-                    color: #64748b;
-                    font-size: 0.95rem;
-                    margin-bottom: 1.5rem;
-                    line-height: 1.5;
-                }
-                
-                .features-grid {
-                    display: grid;
-                    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-                    gap: 1rem;
-                    margin-top: 1.5rem;
-                }
-                
-                .feature-item {
-                    background: #f1f5f9;
-                    padding: 0.75rem;
-                    border-radius: 8px;
-                    font-size: 0.85rem;
-                    color: #475569;
-                    font-weight: 500;
-                    border: 1px solid #e2e8f0;
-                    transition: all 0.2s ease;
-                }
-                
-                .feature-item:hover {
-                    background: #dbeafe;
-                    border-color: #2563eb;
-                    color: #2563eb;
-                    transform: translateY(-1px);
-                }
-                
-                .chat-indicator {
-                    background: linear-gradient(135deg, #10b981, #059669);
-                    color: white;
-                    padding: 0.5rem 1rem;
-                    border-radius: 20px;
-                    font-size: 0.8rem;
-                    font-weight: 500;
-                    display: inline-block;
-                    margin-top: 1rem;
-                    animation: pulse 2s infinite;
-                }
-                
-                @keyframes pulse {
-                    0% { opacity: 1; }
-                    50% { opacity: 0.7; }
-                    100% { opacity: 1; }
-                }
-            </style>
         </head>
         <body>
-            <div class="widget-container">
-                <div class="assistant-status">
-                    🤖 AI Document Assistant Active
-                </div>
-                <div class="assistant-subtitle">
-                    Your intelligent legal document companion is ready to answer questions, explain clauses, and provide risk analysis
-                </div>
-                
-                <div class="features-grid">
-                    <div class="feature-item">
-                        🎤 Voice Chat
-                    </div>
-                    <div class="feature-item">
-                        💬 Text Questions
-                    </div>
-                    <div class="feature-item">
-                        📄 Clause Analysis
-                    </div>
-                    <div class="feature-item">
-                        🔍 Risk Assessment
-                    </div>
-                </div>
-                
-                <div class="chat-indicator">
-                    ● Chat widget will appear in bottom-right corner
-                </div>
-                
-                <script id="omnidimension-web-widget" async src="https://backend.omnidim.io/web_widget.js?secret_key=b45069849cfaedd6106c15a0314c973b"></script>
-            </div>
+            <script id="omnidimension-web-widget" async src="https://backend.omnidim.io/web_widget.js?secret_key=b45069849cfaedd6106c15a0314c973b"></script>
         </body>
         </html>
         """
         
-        components.html(widget_html, height=300)
+        components.html(widget_html, height=50)
     
     def display_risk_summary(self, risk_summary: Dict[str, Any]):
         """Display risk summary dashboard."""
@@ -1496,5 +1370,4 @@ Date: _______________          Date: _______________
             st.subheader("💡 Recommendation")
             st.info(recommendation)
         
-        # Add voice chat widget at the bottom of risk summary
-        self.render_voice_chat_widget()
+
