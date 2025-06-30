@@ -278,8 +278,8 @@ class RiskAnalyzer:
     def _get_overall_recommendation(self, overall_risk: str, high_risk_count: int, total_clauses: int) -> str:
         """Generate overall recommendation for the document."""
         if overall_risk == 'high':
-            return f"This document contains {high_risk_count} high-risk clauses out of {total_clauses} total. Strong recommendation to consult with a legal professional before signing."
+            return f"This document contains {high_risk_count} high-risk clauses out of {total_clauses} total. Ask our AI voice assistant about specific warnings and get detailed explanations before proceeding."
         elif overall_risk == 'medium':
-            return f"This document has moderate risk. Review carefully and consider legal consultation for complex terms."
+            return f"This document has moderate risk. Use the AI voice assistant to understand complex terms and get personalized guidance."
         else:
-            return f"This document appears to have low risk overall. Still recommended to read through all terms carefully."
+            return f"This document appears to have low risk overall. You can ask the AI voice assistant about any specific clauses you want to understand better."
