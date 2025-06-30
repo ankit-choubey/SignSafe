@@ -1055,40 +1055,48 @@ Date: _______________          Date: _______________
                     else:
                         st.success(f"🟢 Low Risk - Score: {clause.get('risk_score', 0)}")
                 
-                # Display text based on translation availability
-                if translation_language:
-                    # Check if clause has been translated
-                    if clause.get('original_translated'):
-                        st.write(f"**Text in {self.translator.get_supported_languages().get(translation_language, translation_language)}:**")
-                        st.write(clause['original_translated'])
-                        
-                        # Show original as expandable section
-                        with st.expander("Show English version", expanded=False):
-                            st.write(clause.get('original', ''))
+                # Create two columns for side-by-side display
+                col1, col2 = st.columns([1, 1])
+                
+                with col1:
+                    # Display original text based on translation availability
+                    if translation_language:
+                        # Check if clause has been translated
+                        if clause.get('original_translated'):
+                            st.write(f"**Text in {self.translator.get_supported_languages().get(translation_language, translation_language)}:**")
+                            st.markdown(f'<div style="background-color: #1e2a3a; padding: 15px; border-radius: 8px; border-left: 4px solid #4a90e2;">{clause["original_translated"]}</div>', unsafe_allow_html=True)
+                            
+                            # Show original as expandable section
+                            with st.expander("Show English version", expanded=False):
+                                st.write(clause.get('original', ''))
+                        else:
+                            st.write("**Original Text (English):**")
+                            st.markdown(f'<div style="background-color: #1e2a3a; padding: 15px; border-radius: 8px; border-left: 4px solid #4a90e2;">{clause.get("original", "")}</div>', unsafe_allow_html=True)
+                            st.info("Use 'Translate All Clauses' button above to translate this document.")
                     else:
-                        st.write("**Original Text (English):**")
-                        st.write(clause.get('original', ''))
-                        st.info("Use 'Translate All Clauses' button above to translate this document.")
-                else:
-                    st.write("**Original Text:**")
-                    st.write(clause.get('original', ''))
+                        st.write("**Original Text:**")
+                        st.markdown(f'<div style="background-color: #1e2a3a; padding: 15px; border-radius: 8px; border-left: 4px solid #4a90e2;">{clause.get("original", "")}</div>', unsafe_allow_html=True)
                 
-                # Explanation section
-                st.write("**What This Means:**")
-                if translation_language and clause.get('explanation_translated'):
-                    st.info(clause['explanation_translated'])
-                else:
-                    explanation = clause.get('explanation', 'This clause contains important legal terms that should be reviewed carefully.')
-                    st.info(explanation)
+                with col2:
+                    # Explanation section
+                    st.write("**What This Means:**")
+                    if translation_language and clause.get('explanation_translated'):
+                        st.markdown(f'<div style="background-color: #0d7377; padding: 15px; border-radius: 8px; border-left: 4px solid #17a2b8; color: white;">{clause["explanation_translated"]}</div>', unsafe_allow_html=True)
+                    else:
+                        explanation = clause.get('explanation', 'This clause contains important legal terms that should be reviewed carefully.')
+                        st.markdown(f'<div style="background-color: #0d7377; padding: 15px; border-radius: 8px; border-left: 4px solid #17a2b8; color: white;">{explanation}</div>', unsafe_allow_html=True)
                 
-                # Simplified text display
+                # Add spacing between sections
+                st.markdown("<br>", unsafe_allow_html=True)
+                
+                # Simplified text display in full width
                 st.write("**Simplified Version:**")
                 
                 # Check if we have translated simplified text
                 if translation_language and clause.get('simplified_translated'):
-                    st.success(clause['simplified_translated'])
+                    st.markdown(f'<div style="background-color: #2d5016; padding: 15px; border-radius: 8px; border-left: 4px solid #28a745; color: white;">{clause["simplified_translated"]}</div>', unsafe_allow_html=True)
                 elif clause.get('simplified'):
-                    st.success(clause['simplified'])
+                    st.markdown(f'<div style="background-color: #2d5016; padding: 15px; border-radius: 8px; border-left: 4px solid #28a745; color: white;">{clause["simplified"]}</div>', unsafe_allow_html=True)
                 else:
                     # Create unique key for each clause
                     simplify_key = f"simplify_{i}_{clause.get('id', i)}"
@@ -1134,7 +1142,7 @@ Date: _______________          Date: _______________
 
                     else:
                         # Show simplified text and reset button
-                        st.success(st.session_state[simplified_key])
+                        st.markdown(f'<div style="background-color: #2d5016; padding: 15px; border-radius: 8px; border-left: 4px solid #28a745; color: white;">{st.session_state[simplified_key]}</div>', unsafe_allow_html=True)
                         if st.button(f"🔄 Simplify Again", key=f"reset_{i}_{clause.get('id', i)}", type="secondary"):
                             st.session_state[simplified_key] = None
                             st.rerun()
