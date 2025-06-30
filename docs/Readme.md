@@ -1,5 +1,3 @@
-<img src="https://r2cdn.perplexity.ai/pplx-full-logo-primary-dark%402x.png" class="logo" width="120"/>
-
 # SignSafe 📜⚖️
 
 **AI-Powered Legal Document Analyzer for Everyone**
@@ -11,39 +9,40 @@
 
 ## 🌟 What is SignSafe?
 
-SignSafe revolutionizes how people understand legal documents by breaking down complex contracts into simple, actionable insights. Whether you're a small business owner reviewing a vendor agreement or an individual signing a lease, SignSafe makes legal language accessible to everyone[^1][^2][^3].
+SignSafe revolutionizes how people understand legal documents by breaking down complex contracts into simple, actionable insights. Whether you're a small business owner reviewing a vendor agreement or an individual signing a lease, SignSafe makes legal language accessible to everyone.
 
 ### ✨ Key Features
 
 🔍 **Smart Document Analysis**
 
-- **PDF \& Image Support**: Upload contracts in any format (PDF, PNG, JPG, JPEG, TIFF, BMP)[^3]
-- **AI-Powered Simplification**: Convert legal jargon to plain English using Google Gemini API[^1][^2]
-- **Clause-by-Clause Breakdown**: Understand every section individually with categorization[^1][^3]
+- **PDF \& Image Support**: Upload contracts in any format (PDF, PNG, JPG, JPEG, TIFF, BMP)
+- **AI-Powered Simplification**: Convert legal jargon to plain English using SignSafe 
+- **Clause-by-Clause Breakdown**: Understand every section individually with categorization
 
 ⚠️ **Risk Assessment**
 
-- **Risk Level Indicators**: High, Medium, Low risk classification with visual indicators[^3]
-- **Vulnerability Detection**: Identify problematic clauses automatically including unlimited liability, personal guarantees, and harsh termination penalties[^3]
-- **Actionable Recommendations**: Get specific advice for each risk area[^3]
+- **Risk Level Indicators**: High, Medium, Low risk classification with visual indicators
+- **Vulnerability Detection**: Identify problematic clauses automatically including unlimited liability, personal guarantees, and harsh termination penalties
+- **Actionable Recommendations**: Get specific advice for each risk area
 
 🗣️ **Interactive Voice Chat**
 
-- Ask questions about your documents in natural language[^1][^3]
+- Ask questions about your documents in natural language
 - "What are my main obligations?"
 - "How can this contract be terminated?"
-- "What are the payment terms?"[^3]
+- "What are the payment terms?"
 
 🌐 **Multi-Language Support**
 
-- **12+ Indian Languages**: Hindi, Tamil, Telugu, Bengali, Marathi, Gujarati, Kannada, Malayalam, Punjabi, Urdu, Odia, Assamese[^3]
-- **Contextual Translation**: Maintains legal accuracy across languages[^1][^3]
-- **Cultural Adaptation**: Understands regional legal contexts[^1]
+- **12+ Indian Languages**: Hindi, Tamil, Telugu, Bengali, Marathi, Gujarati, Kannada, Malayalam, Punjabi, Urdu, Odia, Assamese
+- **Contextual Translation**: Maintains legal accuracy across languages
+- **Cultural Adaptation**: Understands regional legal contexts
+- **DataBase Check**: All the legal documents are assessed, checked in real time using pathway and then using Omnidimension API and our Backend API all through our pipeline
 
 📊 **Professional Templates**
 
-- Generate new contracts using AI including Employment agreements, NDAs, service contracts[^1][^3]
-- Customizable risk levels and complexity[^1]
+- Generate new contracts using AI including Employment agreements, NDAs, service contracts
+- Customizable risk levels and complexity
 
 
 ## 🎯 Who Is This For?
@@ -93,52 +92,51 @@ streamlit run app.py
 
 ### 📋 Requirements
 
-- **Python 3.8+**[^1]
-- **Streamlit** for web interface[^1]
-- **PyPDF2** for PDF processing[^1]
-- **pytesseract** for OCR (Optional: for image documents)[^1]
-- **Google Gemini API** (Optional: for enhanced AI features)[^1][^2]
+- **Python 3.8+**
+- **Streamlit** for web interface
+- **PyPDF2** for PDF processing
+- **pytesseract** for OCR (Optional: for image documents)
 
 
 ## 🔧 How It Works
 
-The application follows a modular pipeline architecture[^1]:
+The application follows a modular pipeline architecture:
 
 ```
 Document Upload → Text Extraction → Clause Segmentation → AI Simplification → Risk Analysis → Results Display
 ```
 
-1. **Upload**: Drag \& drop PDFs or images (max 200MB)[^3]
-2. **Extract**: Automatic text extraction with OCR fallback[^1]
-3. **Analyze**: AI-powered clause identification and categorization into types like liability, termination, warranty, financial, confidentiality[^3]
-4. **Simplify**: Convert legal language to plain English[^1]
-5. **Assess**: Risk scoring and vulnerability detection[^1]
-6. **Interact**: Ask questions and get translations[^1]
+1. **Upload**: Drag \& drop PDFs or images (max 200MB)
+2. **Extract**: Automatic text extraction with OCR fallback
+3. **Analyze**: AI-powered clause identification and categorization into types like liability, termination, warranty, financial, confidentiality
+4. **Simplify**: Convert legal language to plain English
+5. **Assess**: Risk scoring and vulnerability detection
+6. **Interact**: Ask questions and get translations
 
 ## 📱 Features in Detail
 
 ### Document Processing
 
-- **Supported Formats**: PDF, PNG, JPG, JPEG, TIFF, BMP[^3]
-- **Maximum File Size**: 200MB[^3]
-- **Batch Processing**: Handle multiple documents simultaneously[^1]
-- **Real-time Monitoring**: Auto-process files dropped in folders using Watchdog library[^1]
+- **Supported Formats**: PDF, PNG, JPG, JPEG, TIFF, BMP
+- **Maximum File Size**: 200MB
+- **Batch Processing**: Handle multiple documents simultaneously
+- **Real-time Monitoring**: Auto-process files dropped in folders using Watchdog library
 
 
 ### AI Capabilities
 
-- **Google Gemini Integration**: Advanced text processing and analysis[^1][^2]
-- **Omnidimension API**: Alternative AI service for processing[^1]
-- **Fallback Processing**: Pattern-based analysis when APIs unavailable[^1]
-- **Context Awareness**: Maintains legal context during simplification[^1]
+- **Google Gemini Integration**: Advanced text processing and analysis
+- **Omnidimension API**: Alternative AI service for processing
+- **Fallback Processing**: Pattern-based analysis when APIs unavailable
+- **Context Awareness**: Maintains legal context during simplification
 
 
 ### Security \& Privacy
 
-- **Local Processing**: Documents processed on your machine[^1][^3]
-- **No Data Storage**: External services only receive text snippets, not full documents[^3]
-- **API Security**: Environment-based key management[^1]
-- **Privacy First**: No sensitive document metadata transmitted[^1][^3]
+- **Local Processing**: Documents processed on your machine
+- **No Data Storage**: External services only receive text snippets, not full documents
+- **API Security**: Environment-based key management
+- **Privacy First**: No sensitive document metadata transmitted
 
 
 ## 🏗️ Architecture
