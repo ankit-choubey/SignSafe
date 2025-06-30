@@ -98,44 +98,113 @@ class SignSafeApp:
         # Add global widget script
         import streamlit.components.v1 as components
         
-        # Load widget script globally to ensure it works across all pages
+        # Load widget script globally with enhanced positioning
         components.html("""
         <style>
-        /* Ensure widget appears on top of Streamlit elements */
-        iframe[id*="omnidimension"] {
-            z-index: 999999 !important;
-            position: fixed !important;
+        /* Remove any Streamlit container constraints */
+        .stApp {
+            overflow: visible !important;
         }
         
-        /* Override any Streamlit z-index conflicts */
-        .omnidimension-widget,
-        .omnidimension-widget * {
-            z-index: 999999 !important;
-            position: fixed !important;
-        }
-        
-        /* Ensure widget container is properly positioned */
-        [id*="omnidimension"] {
-            z-index: 999999 !important;
-        }
-        
-        /* Additional widget positioning fixes */
+        /* Ensure all widget elements are free-floating */
+        [id*="omnidimension"],
+        [class*="omnidimension"],
+        iframe[src*="omnidim"],
         div[id*="omnidimension"],
         div[class*="omnidimension"] {
-            z-index: 999999 !important;
             position: fixed !important;
+            z-index: 2147483647 !important;
+            top: auto !important;
+            bottom: 20px !important;
+            right: 20px !important;
+            left: auto !important;
+            width: auto !important;
+            height: auto !important;
+            max-width: none !important;
+            max-height: none !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            border: none !important;
+            transform: none !important;
+            clip: none !important;
+            overflow: visible !important;
+        }
+        
+        /* Override Streamlit iframe constraints */
+        .stApp iframe {
+            overflow: visible !important;
+        }
+        
+        /* Reduce Streamlit container priority */
+        .main,
+        .stApp > header,
+        .stApp > .main,
+        .stApp > .sidebar,
+        [data-testid="stAppViewContainer"] {
+            z-index: 1 !important;
+            position: relative !important;
         }
         </style>
-        <script id="omnidimension-web-widget" async src="https://backend.omnidim.io/web_widget.js?secret_key=b45069849cfaedd6106c15a0314c973b"></script>
         <script>
-        // Additional JavaScript to ensure widget positioning
-        setTimeout(function() {
-            var widgets = document.querySelectorAll('[id*="omnidimension"], [class*="omnidimension"]');
-            widgets.forEach(function(widget) {
-                widget.style.zIndex = '999999';
-                widget.style.position = 'fixed';
+        // Load widget with enhanced positioning
+        (function() {
+            var script = document.createElement('script');
+            script.id = 'omnidimension-web-widget';
+            script.src = 'https://backend.omnidim.io/web_widget.js?secret_key=b45069849cfaedd6106c15a0314c973b';
+            script.async = true;
+            
+            // Append to document head to avoid Streamlit container constraints
+            document.head.appendChild(script);
+            
+            // Monitor and fix widget positioning
+            function fixWidgetPosition() {
+                var widgets = document.querySelectorAll('[id*="omnidimension"], [class*="omnidimension"], iframe[src*="omnidim"]');
+                widgets.forEach(function(widget) {
+                    widget.style.position = 'fixed';
+                    widget.style.zIndex = '2147483647';
+                    widget.style.bottom = '20px';
+                    widget.style.right = '20px';
+                    widget.style.top = 'auto';
+                    widget.style.left = 'auto';
+                    widget.style.width = 'auto';
+                    widget.style.height = 'auto';
+                    widget.style.maxWidth = 'none';
+                    widget.style.maxHeight = 'none';
+                    widget.style.overflow = 'visible';
+                    widget.style.transform = 'none';
+                    widget.style.clip = 'auto';
+                    
+                    // Ensure parent containers don't constrain
+                    var parent = widget.parentElement;
+                    while (parent) {
+                        if (parent.style) {
+                            parent.style.overflow = 'visible';
+                            parent.style.zIndex = '1';
+                        }
+                        parent = parent.parentElement;
+                    }
+                });
+            }
+            
+            // Apply fixes multiple times
+            setTimeout(fixWidgetPosition, 1000);
+            setTimeout(fixWidgetPosition, 3000);
+            setTimeout(fixWidgetPosition, 5000);
+            
+            // Monitor for new widgets
+            var observer = new MutationObserver(function(mutations) {
+                mutations.forEach(function(mutation) {
+                    if (mutation.addedNodes) {
+                        fixWidgetPosition();
+                    }
+                });
             });
-        }, 2000);
+            
+            observer.observe(document.body, {
+                childList: true,
+                subtree: true
+            });
+        })();
         </script>
         """, height=0)
         
