@@ -1435,6 +1435,7 @@ Date: _______________          Date: _______________
         
         # Risk distribution chart
         if risk_summary.get('total_clauses', 0) > 0:
+            st.markdown("<br><br>", unsafe_allow_html=True)
             st.subheader("📊 Risk Distribution")
             
             risk_data = {
